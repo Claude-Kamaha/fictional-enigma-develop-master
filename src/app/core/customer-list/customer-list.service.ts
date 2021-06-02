@@ -5,9 +5,10 @@ import { CustomerList } from './customer-list.model';
 import { BehaviorSubject, Observable,of } from 'rxjs';
 import { tap, catchError, } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+ 
+
 @Injectable({
-  providedIn: 'root',
-})
+  providedIn: 'root',})
 
 export class CustomerListService 
 {
@@ -20,7 +21,7 @@ export class CustomerListService
 
   //private httpclient: HttpClient;
   apiHost = `https://sandbox.nellys-coin.ejaraapis.xyz/api/v1/customer/profile-details`;
-  customerlist: any[];
+  customerlist: CustomerList[];
   onCustomerChanged: BehaviorSubject<any>;
   httpOptions = {
     headers: new HttpHeaders({
@@ -32,16 +33,16 @@ export class CustomerListService
   
   
   
- getCustomerDetails(): Observable< CustomerList>{
+ getCustomerDetails(): Observable<any>{
   console.log('fetched heroes');
-    return this.httpClient.get< CustomerList[]>(this.apiHost, this.httpOptions)
+    return this.httpClient.get<any>(this.apiHost, this.httpOptions)
     .pipe( 
-      tap(data => console.log('fetched heroes')),
+      tap(
+        () => console.log('fetched heroes2')),
       catchError(this.handleError<CustomerList[]>('getCustomerDetails', []))
       );
       console.log('fetched heroes2');
- //.toPromise()
-   // .then(res => this.list = res as CustomerList[]);
+ 
    
 
     
@@ -71,7 +72,10 @@ export class CustomerListService
     
   } */
 
-
+/**
+     * Setter & getter for access token
+     */
+ 
 }
 
  

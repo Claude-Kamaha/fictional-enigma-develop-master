@@ -137,6 +137,8 @@ export class AuthService {
          * Sign in using the access token
          */
     signInUsingToken(): Observable<any> {
+        
+        
         // Renew token
         return this._httpClient.post('api/auth/refresh-access-token', {
             access_token: this.accessToken

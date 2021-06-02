@@ -10,6 +10,10 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge,  Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged,takeUntil  } from 'rxjs/operators';
 import { FuseUtils } from '@fuse/utils';
+
+
+
+
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
@@ -17,9 +21,9 @@ import { FuseUtils } from '@fuse/utils';
 })
 export class CustomerListComponent implements OnInit{
   
-    customerDetails: any[];
-    item: any[];
-    data:CustomerList[] = [];
+   // customer: Customer[];
+   customers: CustomerList[];
+   // data:CustomerList[] = [];
     /**
      * Constructor
      *
@@ -30,23 +34,27 @@ export class CustomerListComponent implements OnInit{
     constructor(
         private customerListService: CustomerListService,
         
-    )
+    ){}
     
-{}
+
  
 
   ngOnInit(): void {
+    {
+      this.customerListService.getCustomerDetails().subscribe(
+        data => {
+         
+        this.customers= data;
+        console.log(this.customers);
+      }
+    
+         //this.listCustomer = new MatTableDataSource(list);
+    ) 
+    }
   // this.customerListService.getCustomerDetails();
-this.customerListService.getCustomerDetails().subscribe(
-   data => {
-   let list= data.map(item =>{
-     return {
-       ...item
-     //this.listCustomer = new MatTableDataSource(list);
-    } });
- 
+  
 // this.customerListService.getCustomerDetails();
-});
+}
 
 
 
@@ -56,5 +64,5 @@ this.customerListService.getCustomerDetails().subscribe(
   
   //this.listCustomer = new MatTableDataSource(this.customerListService.getCustomerDetails().subscribe(data => this.data=data));
   
-}
+
 
