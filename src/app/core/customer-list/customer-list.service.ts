@@ -32,7 +32,7 @@ export class CustomerListService
   
   
   
- getCustomerDetails(): Observable< CustomerList[]>{
+ getCustomerDetails(): Observable< CustomerList>{
   console.log('fetched heroes');
     return this.httpClient.get< CustomerList[]>(this.apiHost, this.httpOptions)
     .pipe( 
