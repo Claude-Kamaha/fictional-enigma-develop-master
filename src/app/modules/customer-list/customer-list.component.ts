@@ -10,6 +10,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, fromEvent, merge,  Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged,takeUntil  } from 'rxjs/operators';
 import { FuseUtils } from '@fuse/utils';
+import { SearchComponent } from 'app/layout/common/search/search.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -20,9 +22,9 @@ import { FuseUtils } from '@fuse/utils';
   styleUrls: ['./customer-list.component.scss']
 })
 export class CustomerListComponent implements OnInit{
-  
+  username: any;
    // customer: Customer[];
-   customers: CustomerList[];
+   customer: CustomerList[] = [];
    // data:CustomerList[] = [];
     /**
      * Constructor
@@ -42,15 +44,20 @@ export class CustomerListComponent implements OnInit{
   ngOnInit(): void {
     {
       this.customerListService.getCustomerDetails().subscribe(
-        data => {
-         
-        this.customers= data;
-        console.log(this.customers);
+        response => {
+          console.log(response);
+          console.log(JSON.stringify(response));
+          console.log(response);
+        this.customer= response.data;
+        console.log(this.customer);
+       
       }
     
          //this.listCustomer = new MatTableDataSource(list);
     ) 
     }
+
+   
   // this.customerListService.getCustomerDetails();
   
 // this.customerListService.getCustomerDetails();
@@ -59,7 +66,16 @@ export class CustomerListComponent implements OnInit{
 
 
 
+Search(){
+  if(this.username == ''){
+    this.ngOnInit();
 
+  }else{
+    this.customer = this.customer.filter(res=>{
+      return res.username.toLocaleLowerCase().match(this.username.toLocaleLowerCase());
+    })
+ }
+}
   }
   
   //this.listCustomer = new MatTableDataSource(this.customerListService.getCustomerDetails().subscribe(data => this.data=data));

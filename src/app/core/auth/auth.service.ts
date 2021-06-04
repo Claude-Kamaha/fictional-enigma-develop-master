@@ -7,7 +7,8 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { appConfig } from '../../../app/core/config/app.config'
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { environment } from '../../../../src/environments/environment';
+import { Login} from './login'
 
 
 @Injectable({
@@ -82,13 +83,18 @@ export class AuthService {
             "log": email,
             "password": password
         }
-
-        return this._httpClient.post<any>(`${appConfig.host}/api/v1/auth/login`, user, this.httpOptions).pipe(
-            tap(() => console.log('')),
-            catchError(this.handleError<any>('send'))
-        );
-    }
-
+        let params = new URLSearchParams();
+   // params.append('email', login.email);
+    //params.append('password', login.password);
+    params.append('Content-Type', environment.content_Type);
+    params.append('client-id', environment.client_id);
+    params.append('api-key', environment.api_key);
+    console.log('return1');
+        return this._httpClient.post(`${environment.base_url1}/api/v1/auth/login`, user,this.httpOptions);
+        console.log('return2'); }
+    getUserInfo(): Observable<any> {
+        return this._httpClient.get(`${environment.base_url}/api/v1/customer/profile-details`);
+      }
 
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any) => {

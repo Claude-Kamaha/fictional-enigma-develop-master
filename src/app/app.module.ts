@@ -18,6 +18,8 @@ import { ProjectComponent } from './modules/dashboards/project/project.component
 import { CustomerListComponent } from './modules/customer-list/customer-list.component';
 import {  MatTableModule } from '@angular/material/table'; 
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+
 const routerConfig: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
     preloadingStrategy       : PreloadAllModules,
@@ -43,6 +45,7 @@ const routerConfig: ExtraOptions = {
         MatSnackBarModule,
         MatTableModule,
         MatIconModule,
+        FormsModule,
         
         // Core
         CoreModule,

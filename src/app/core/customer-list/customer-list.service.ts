@@ -12,30 +12,32 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 
 export class CustomerListService 
 {
+  token: string;
   constructor(
     private httpClient: HttpClient
   
     ) { 
       this.onCustomerChanged = new BehaviorSubject({});
+      this.token = localStorage.getItem('token')
     }
 
   //private httpclient: HttpClient;
   apiHost = `https://sandbox.nellys-coin.ejaraapis.xyz/api/v1/customer/profile-details`;
   customerlist: CustomerList[];
   onCustomerChanged: BehaviorSubject<any>;
-  httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-    })
-  }
+ 
     
 
   
-  
-  
  getCustomerDetails(): Observable<any>{
+  const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+    })
+  }
   console.log('fetched heroes');
-    return this.httpClient.get<any>(this.apiHost, this.httpOptions)
+    return this.httpClient.get<any>(this.apiHost, httpOptions)
     .pipe( 
       tap(
         () => console.log('fetched heroes2')),

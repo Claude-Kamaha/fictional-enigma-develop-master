@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'app/core/user/user.service';
+import { CustomerList } from 'app/core/customer-list/customer-list.model';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class AuthSignInComponent implements OnInit {
             password: ['', Validators.required]
         });
     }
+    customer: CustomerList[];
     // -----------------------------------------------------------------------------------------------------
     // convenience getter for easy access to form fields
     //Method 1: connecting the login button for it to send a response when clicked
@@ -67,7 +69,11 @@ export class AuthSignInComponent implements OnInit {
 
         this._authService.loginCustomer(this.form.email.value, this.form.password.value)
             .subscribe(
-                data => {
+                data  => {
+                    //alert(JSON.stringify(data));
+                   localStorage.setItem('token', data.token);
+                    this.getUserInfo();
+                    console.log('goog')
                     if (data.responsecode !== "login_ok") {
                         this.snackBar.open('The provided username/email and password combination does not match any user in the database', 'OK', {
                             verticalPosition: 'top',
@@ -94,7 +100,17 @@ export class AuthSignInComponent implements OnInit {
                         duration: 2000,
                     });
                 });
+
     }
+    getUserInfo() {
+        this._authService.getUserInfo().subscribe((response: CustomerList) => {
+          localStorage.setItem('loginUser', JSON.stringify(response.username))
+    
+        }, (error => {
+          this.spin = false;
+        }));
+      }
+    
 
     // -----------------------------------------------------------------------------------------------------
     // convenience getter for easy access to form fields
